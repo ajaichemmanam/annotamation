@@ -101,14 +101,20 @@ category_index = label_map_util.create_category_index_from_labelmap(
 #cap = cv2.VideoCapture(0)
 
 path = "dataset/testImages"
+filesCount = len(os.listdir(path))
+print("Total Files to Annotate: ", filesCount)
+count = 0
 filepaths = [os.path.join(path, f) for f in os.listdir(path)]
 
 with detection_graph.as_default():
     with tf.Session() as sess:
         for filepath in filepaths:
             # while True:
+            count += 1
+            print("Annotating files... {0} of {1}".format(count, filesCount))
             _, filename = os.path.split(filepath)
             folder = os.path.dirname(filepath)
+
             #ret,image = cap.read()
             # Get File Properties
             image = cv2.imread(filepath)
@@ -117,8 +123,8 @@ with detection_graph.as_default():
 
             fileProps = fileProperties(
                 filename, folder, filepath, imageWidth, imageHeight, imageChannels, imageSize)
-            print("file", filepath, "folder", folder, "imgHeight", imageHeight, "imgWidth", imageWidth,
-                  "imgChannel", imageChannels, "imgSize", imageSize)
+            # print("file", filepath, "folder", folder, "imgHeight", imageHeight, "imgWidth", imageWidth,
+            #       "imgChannel", imageChannels, "imgSize", imageSize)
 
             # Get handles to input and output tensors
             ops = tf.get_default_graph().get_operations()
