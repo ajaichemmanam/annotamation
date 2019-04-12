@@ -104,5 +104,7 @@ venv.bak/
 .mypy_cache/
 
 #Miscs
-dataset/
+data/dataset/
+data/train/
+data/test/
 models/

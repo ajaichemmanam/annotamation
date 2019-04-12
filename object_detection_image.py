@@ -107,7 +107,7 @@ for key in category_index.keys():
     labels.append(category_index[key]["name"])
 #cap = cv2.VideoCapture(0)
 
-path = "dataset/testImages"
+path = "data/dataset"
 filesCount = len(os.listdir(path))
 print("Total Files to Annotate: ", filesCount)
 count = 0
@@ -200,9 +200,9 @@ with detection_graph.as_default():
                     use_normalized_coordinates=True,
                     line_thickness=8)
                 # Save the images with boxes
-                cv2.imwrite("dataset/testOutput/"+filename, image)
+                #cv2.imwrite("data/testOutput/"+filename, image)
             else:
                 print("Skipping Unsupported File: ", filename)
 
 # Generate Image Augmented File
-generateAugmented("dataset/trainImages", labels, "dataset/trainAugmented")
+generateAugmented("data/dataset", labels, "data/dataset")

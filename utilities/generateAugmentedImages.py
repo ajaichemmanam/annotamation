@@ -85,7 +85,7 @@ def setAnnoCoord(xmlpath, classname, coordlist):
 	try:
 		tree = ET.ElementTree(file=xmlpath)
 		root = tree.getroot()
-		tagname = 'Object'
+		tagname = 'object'
 		classtag = 'name'
 		classname = classname
 		bboxtag = 'bndbox'
