@@ -13,10 +13,13 @@ from io import StringIO
 from matplotlib import pyplot as plt
 from PIL import Image
 import cv2
-from object_detection.utils import ops as utils_ops
+from utilities.utils import ops as utils_ops
 
-from object_detection.utils import label_map_util
-from object_detection.utils import visualization_utils as vis_util
+from utilities.utils import label_map_util
+from utilities.utils import visualization_utils as vis_util
+
+# Import Classes
+from utilities.classes import objectItem, fileProperties
 
 
 def run_inference_for_single_image(image, graph):
@@ -98,10 +101,16 @@ with detection_graph.as_default():
     with tf.Session() as sess:
         for filepath in filepaths:
             # while True:
-            _, img_name = os.path.split(filepath)
-            print("img:::::::", img_name)
+            _, filename = os.path.split(filepath)
             #ret,image = cap.read()
+            # Get File Properties
             image = cv2.imread(filepath)
+            imageHeight, imageWidth, imageChannels = image.shape
+            imageSize = os.path.getsize(filepath)
+            fileProps = fileProperties(
+                filename, filepath, imageWidth, imageHeight, imageChannels, imageSize)
+            print("file", filepath, "imgHeight", imageHeight, "imgWidth", imageWidth,
+                  "imgChannel", imageChannels, "imgSize", imageSize)
 
             # Get handles to input and output tensors
             ops = tf.get_default_graph().get_operations()
@@ -153,6 +162,8 @@ with detection_graph.as_default():
                 output_dict['detection_masks'] = output_dict['detection_masks'][0]
 
             #output_dict = run_inference_for_single_image(image_np, detection_graph)
+
+            # Draw boxes
             vis_util.visualize_boxes_and_labels_on_image_array(
                 image,
                 output_dict['detection_boxes'],
@@ -162,4 +173,5 @@ with detection_graph.as_default():
                 instance_masks=output_dict.get('detection_masks'),
                 use_normalized_coordinates=True,
                 line_thickness=8)
-            cv2.imwrite("dataset/testOutput/"+img_name, image)
+            # Save the images with boxes
+            cv2.imwrite("dataset/testOutput/"+filename, image)
