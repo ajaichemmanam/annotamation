@@ -1,7 +1,7 @@
 import xml.etree.cElementTree as ET
 
 
-def generateXMl(fileProps, objectList):
+def generateXML(fileProps, objectList):
     annotation = ET.Element("annotation")
     ET.SubElement(annotation, "folder").text = fileProps.folder
     ET.SubElement(annotation, "filename").text = fileProps.filename
@@ -13,7 +13,7 @@ def generateXMl(fileProps, objectList):
     size = ET.SubElement(annotation, "size")
     ET.SubElement(size, "width").text = str(fileProps.imageWidth)
     ET.SubElement(size, "height").text = str(fileProps.imageHeight)
-    ET.SubElement(size, "depth").text = "3"
+    ET.SubElement(size, "depth").text = str(fileProps.imageChannels)
 
     ET.SubElement(annotation, "segmented").text = "0"
 

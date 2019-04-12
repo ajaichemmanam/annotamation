@@ -21,6 +21,12 @@ from utilities.utils import visualization_utils as vis_util
 # Import Classes
 from utilities.classes import objectItem, fileProperties
 
+#  Import Find Objects
+from utilities.findObjects import findObjects
+
+# Import Generate XMl utility
+from utilities.generateXML import generateXML
+
 
 def run_inference_for_single_image(image, graph):
     with graph.as_default():
@@ -102,14 +108,16 @@ with detection_graph.as_default():
         for filepath in filepaths:
             # while True:
             _, filename = os.path.split(filepath)
+            folder = os.path.dirname(filepath)
             #ret,image = cap.read()
             # Get File Properties
             image = cv2.imread(filepath)
             imageHeight, imageWidth, imageChannels = image.shape
             imageSize = os.path.getsize(filepath)
+
             fileProps = fileProperties(
-                filename, filepath, imageWidth, imageHeight, imageChannels, imageSize)
-            print("file", filepath, "imgHeight", imageHeight, "imgWidth", imageWidth,
+                filename, folder, filepath, imageWidth, imageHeight, imageChannels, imageSize)
+            print("file", filepath, "folder", folder, "imgHeight", imageHeight, "imgWidth", imageWidth,
                   "imgChannel", imageChannels, "imgSize", imageSize)
 
             # Get handles to input and output tensors
@@ -162,7 +170,11 @@ with detection_graph.as_default():
                 output_dict['detection_masks'] = output_dict['detection_masks'][0]
 
             #output_dict = run_inference_for_single_image(image_np, detection_graph)
-
+            # Find Objects detected for writing to XML
+            objectList = findObjects(output_dict['detection_boxes'], output_dict['detection_classes'],
+                                     output_dict['detection_scores'], category_index)
+            # Generate XML
+            generateXML(fileProps, objectList)
             # Draw boxes
             vis_util.visualize_boxes_and_labels_on_image_array(
                 image,
