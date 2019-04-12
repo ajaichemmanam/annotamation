@@ -26,9 +26,11 @@ from utilities.findObjects import findObjects
 
 # Import Generate XMl utility
 from utilities.generateXML import generateXML
-
+# Import Image Augmentation utility
+from utilities.generateAugmentedImages import generateAugmented
 # Supported files for Inference and Annotation
 supportedfiles = ["jpg", "jpeg", "png", "bmp"]
+labels = []
 
 
 def run_inference_for_single_image(image, graph):
@@ -101,6 +103,8 @@ with detection_graph.as_default():
 category_index = label_map_util.create_category_index_from_labelmap(
     PATH_TO_LABELS)
 
+for key in category_index.keys():
+    labels.append(category_index[key]["name"])
 #cap = cv2.VideoCapture(0)
 
 path = "dataset/testImages"
@@ -199,3 +203,6 @@ with detection_graph.as_default():
                 cv2.imwrite("dataset/testOutput/"+filename, image)
             else:
                 print("Skipping Unsupported File: ", filename)
+
+# Generate Image Augmented File
+generateAugmented("dataset/trainImages", labels, "dataset/trainAugmented")
