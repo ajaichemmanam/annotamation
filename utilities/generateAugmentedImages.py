@@ -111,7 +111,7 @@ def dataAugment(origimgfilepath, annofilepath, objectList, numImgGen, destdir):
 			modifiedkeypoints = {}
 			idx = 1 
 			cntr = 1
-			print("Keypoints for Image {}".format(img_idx))
+			print("Generating Augmented Image {} of {} for {}".format(img_idx + 1, len(images), imgname))
 			for kp_idx, keypoint in enumerate(keypoints_after.keypoints):
 				x_new, y_new = keypoint.x, keypoint.y
 				modifiedrect.append([int(x_new), int(y_new)])
