@@ -26,8 +26,14 @@ from utilities.findObjects import findObjects
 
 # Import Generate XMl utility
 from utilities.generateXML import generateXML
+
 # Import Image Augmentation utility
 from utilities.generateAugmentedImages import generateAugmented
+
+# Import Prompt
+from utilities.prompt import promptInput
+
+labelImgPath = 'E:\Tensorflow\labelImgRelease\labelImg.exe'
 # Supported files for Inference and Annotation
 supportedfiles = ["jpg", "jpeg", "png", "bmp"]
 labels = []
@@ -205,14 +211,11 @@ with detection_graph.as_default():
                 print("Skipping Unsupported File: ", filename)
 
 print("All Images have been annotated. Please verify before Augmentation")
-while True:
-    # your code
-    cont = input("Verified? Enter y / n ")
-    while cont.lower() not in ("y", "n"):
-        cont = input("Enter y for yes and n for no. Verified XML? ")
-    if cont == "n":
-        break
-    elif cont == "y":
-        # Generate Image Augmented File @Params Origin Directory , Destination Directory
-        generateAugmented("data/dataset", "data\dataset")
-        break
+openLabelImg = promptInput("Open labalImg Tool?")
+if(openLabelImg):
+    os.system(labelImgPath)
+
+verified = promptInput("Verified XMl?")
+if(verified):
+    # Generate Image Augmented File @Params Origin Directory , Destination Directory
+    generateAugmented("data/dataset", "data\dataset")
