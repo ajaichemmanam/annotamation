@@ -6,3 +6,17 @@ def promptInput(message):
         return False
     elif cont == "y":
         return True
+
+
+def promptInt(message):
+    isSuccess = False
+    val = 0
+    while (not isSuccess):
+        userInput = input(message)
+        try:
+            val = int(userInput)
+            isSuccess = True
+        except ValueError:
+            print("Please Enter a valid Integer. ")
+            isSuccess = False
+    return val

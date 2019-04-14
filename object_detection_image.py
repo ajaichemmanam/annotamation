@@ -31,7 +31,7 @@ from utilities.generateXML import generateXML
 from utilities.generateAugmentedImages import generateAugmented
 
 # Import Prompt
-from utilities.prompt import promptInput
+from utilities.prompt import promptInput, promptInt
 
 labelImgPath = 'E:\Tensorflow\labelImgRelease\labelImg.exe'
 # Supported files for Inference and Annotation
@@ -217,5 +217,7 @@ if(openLabelImg):
 
 verified = promptInput("Verified XMl?")
 if(verified):
-    # Generate Image Augmented File @Params Origin Directory , Destination Directory
-    generateAugmented("data/dataset", "data\dataset")
+    numImgGen = promptInt(
+        "How many augmented Images have to be generated per Image?")
+    # Generate Image Augmented File @Params Origin Directory , Destination Directory, Number of Images to be generated
+    generateAugmented("data/dataset", "data\dataset", numImgGen)

@@ -21,9 +21,8 @@ from utilities.generateXML import setAugAnnotationXML, getAnnotaitonXML
 directory = ''
 destdir = ''
 supportedfiles = ["jpg", "jpeg", "png", "bmp"]
-numImgGen = 10
 
-def dataAugment(origimgfilepath, annofilepath, objectList, destdir):
+def dataAugment(origimgfilepath, annofilepath, objectList, numImgGen, destdir):
 	try:
 		images = []
 		image = cv2.imread(origimgfilepath)
@@ -173,7 +172,7 @@ def getImgRect(imgfilepath,coordlist):
 
 	return([xmin, ymin, xmax, ymax])
 
-def generateAugmented(origin, destination):
+def generateAugmented(origin, destination, numImages):
 	directory = origin
 	destdir = destination
 	filepaths = [os.path.join(origin, f) for f in os.listdir(origin)]
@@ -189,4 +188,4 @@ def generateAugmented(origin, destination):
 			annofilepath = os.path.join(directory, annofilename)
 			# print("annofilepath", annofilepath, "origfilepath", origimgfilepath)
 			fileProps, objectList =  getAnnotaitonXML(annofilepath)
-			dataAugment(origimgfilepath, annofilepath,objectList, destdir)
+			dataAugment(origimgfilepath, annofilepath,objectList, numImages, destdir)
