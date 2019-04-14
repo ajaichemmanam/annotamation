@@ -31,12 +31,18 @@ from utilities.generateXML import generateXML
 from utilities.generateAugmentedImages import generateAugmented
 
 # Import Prompt
-from utilities.prompt import promptInput, promptInt
+from utilities.prompt import promptInput, promptInt, promptRatio
+
+# Import File utilities
+from utilities.fileUtilities import splitTestTrainFiles
 
 labelImgPath = 'E:\Tensorflow\labelImgRelease\labelImg.exe'
 # Supported files for Inference and Annotation
 supportedfiles = ["jpg", "jpeg", "png", "bmp"]
 labels = []
+
+trainDir = 'data/train'
+testDir = 'data/test'
 
 
 def run_inference_for_single_image(image, graph):
@@ -215,9 +221,15 @@ openLabelImg = promptInput("Open labalImg Tool?")
 if(openLabelImg):
     os.system(labelImgPath)
 
-verified = promptInput("Verified XMl?")
+verified = promptInput("Verified XMl Files?")
 if(verified):
     numImgGen = promptInt(
         "How many augmented Images have to be generated per Image?")
     # Generate Image Augmented File @Params Origin Directory , Destination Directory, Number of Images to be generated
     generateAugmented("data/dataset", "data\dataset", numImgGen)
+
+testPercentage, trainPercentage = promptRatio("Give Test:Train Ratio. ")
+hasSplit = splitTestTrainFiles(path, testDir, trainDir,
+                               testPercentage, trainPercentage)
+if(hasSplit):
+    print("Files split to Test and Train Folders")
