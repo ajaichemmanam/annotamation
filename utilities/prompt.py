@@ -1,3 +1,6 @@
+import sys
+
+
 def promptInput(message):
     cont = input(message + " Enter y / n " + "\n")
     while cont.lower() not in ("y", "n"):
@@ -19,6 +22,9 @@ def promptInt(message):
         except ValueError:
             print("Please Enter a valid Integer. ")
             isSuccess = False
+        except Exception as e:
+            print("Error in Integer Prompt: "+str(e))
+            print('Error on line {}'.format(sys.exc_info()[-1].tb_lineno))
     return val
 
 
@@ -40,5 +46,6 @@ def promptRatio(message):
             print("Please Enter a valid Ratio. ")
             isSuccess = False
         except Exception as e:
-            print(str(e))
+            print("Error in Ratio Prompt: "+str(e))
+            print('Error on line {}'.format(sys.exc_info()[-1].tb_lineno))
     return val1, val2
