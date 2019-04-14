@@ -1,10 +1,15 @@
-Semi Automatic annotation for Object Detection
+Semi Automatic annotation for Object Detection.
 
-Dependencies:
+## Notes:
 
-## FOR IMAGE AUGMENTATION
+## Dependencies:
 
-Download appropriate whl file for shapely for this site
+FOR ANNOTATION VERIFICATION
+Required LabelImg: https://github.com/tzutalin/labelImg/releases
+
+FOR IMAGE AUGMENTATION
+
+Download appropriate whl file for shapely from this site
 https://www.lfd.uci.edu/~gohlke/pythonlibs/#shapely
 
 pip install \*.whl file

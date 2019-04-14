@@ -219,7 +219,10 @@ with detection_graph.as_default():
 print("All Images have been annotated. Please verify before Augmentation")
 openLabelImg = promptInput("Open labalImg Tool?")
 if(openLabelImg):
-    os.system(labelImgPath)
+    if(os.path.isfile(labelImgPath)):
+        os.system(labelImgPath)
+    else:
+        print("Please check the path to LabelImg")
 
 verified = promptInput("Verified XMl Files?")
 if(verified):
