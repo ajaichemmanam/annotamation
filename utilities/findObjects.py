@@ -1,5 +1,5 @@
 # Import ObjectItem Class
-from utilities.classes import objectItem
+from utilities.classes import labelItem
 
 max_boxes_to_draw = 20
 min_score_thresh = 0.5
@@ -14,6 +14,6 @@ def findObjects(boxes, classes, scores, category_index):
                 label = category_index[classes[i]]['name']
             else:
                 label = 'N/A'
-            o = objectItem(label, xmin, ymin, xmax, ymax)
+            o = labelItem(label, xmin, ymin, xmax, ymax)
             objectList.append(o)
     return objectList

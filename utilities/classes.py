@@ -1,10 +1,15 @@
-class objectItem:
+class labelItem:
     def __init__(self, label, xmin, ymin, xmax, ymax):
         self.label = label
         self.xmin = xmin
         self.ymin = ymin
         self.xmax = xmax
         self.ymax = ymax
+
+
+def returnObject(label, xmin, ymin, xmax, ymax):
+    o = labelItem(label, xmin, ymin, xmax, ymax)
+    return o
 
 
 class fileProperties:

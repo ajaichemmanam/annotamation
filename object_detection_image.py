@@ -19,7 +19,7 @@ from utilities.utils import label_map_util
 from utilities.utils import visualization_utils as vis_util
 
 # Import Classes
-from utilities.classes import objectItem, fileProperties
+from utilities.classes import labelItem, fileProperties
 
 #  Import Find Objects
 from utilities.findObjects import findObjects
@@ -89,7 +89,7 @@ def run_inference_for_single_image(image, graph):
 
 
 PATH_TO_FROZEN_GRAPH = 'models/frozen_inference_graph.pb'
-PATH_TO_LABELS = os.path.join('./models', 'berries.pbtxt')
+PATH_TO_LABELS = os.path.join('./models', 'labels.pbtxt')
 
 detection_graph = tf.Graph()
 with detection_graph.as_default():
@@ -204,5 +204,15 @@ with detection_graph.as_default():
             else:
                 print("Skipping Unsupported File: ", filename)
 
-# Generate Image Augmented File
-generateAugmented("data/dataset", labels, "data/dataset")
+print("All Images have been annotated. Please verify before Augmentation")
+while True:
+    # your code
+    cont = input("Verified? Enter y / n ")
+    while cont.lower() not in ("y", "n"):
+        cont = input("Enter y for yes and n for no. Verified XML? ")
+    if cont == "n":
+        break
+    elif cont == "y":
+        # Generate Image Augmented File @Params Origin Directory , Destination Directory
+        generateAugmented("data/dataset", "data\dataset")
+        break
