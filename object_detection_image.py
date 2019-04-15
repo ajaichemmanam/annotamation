@@ -117,13 +117,13 @@ with detection_graph.as_default():
         od_graph_def.ParseFromString(serialized_graph)
         tf.import_graph_def(od_graph_def, name='')
 
-##category_index = label_map_util.create_category_index_from_labelmap(PATH_TO_LABELS, use_display_name=True)
+# category_index = label_map_util.create_category_index_from_labelmap(PATH_TO_LABELS, use_display_name=True)
 category_index = label_map_util.create_category_index_from_labelmap(
     PATH_TO_LABELS)
 
 for key in category_index.keys():
     initLabels[key] = category_index[key]["name"]
-#cap = cv2.VideoCapture(0)
+# cap = cv2.VideoCapture(0)
 
 path = "data/dataset"
 filesCount = len(os.listdir(path))
@@ -141,7 +141,7 @@ with detection_graph.as_default():
             folder = os.path.dirname(filepath)
             filesplit = filename.split(".")
             if filesplit[len(filesplit)-1] in supportedfiles:
-                #ret,image = cap.read()
+                # ret,image = cap.read()
                 # Get File Properties
                 image = cv2.imread(filepath)
                 imageHeight, imageWidth, imageChannels = image.shape
@@ -201,7 +201,7 @@ with detection_graph.as_default():
                 if 'detection_masks' in output_dict:
                     output_dict['detection_masks'] = output_dict['detection_masks'][0]
 
-                #output_dict = run_inference_for_single_image(image_np, detection_graph)
+                # output_dict = run_inference_for_single_image(image_np, detection_graph)
                 # Find Objects detected for writing to XML
                 objectList = findObjects(output_dict['detection_boxes'], output_dict['detection_classes'],
                                          output_dict['detection_scores'], category_index)
@@ -218,7 +218,7 @@ with detection_graph.as_default():
                     use_normalized_coordinates=True,
                     line_thickness=8)
                 # Save the images with boxes
-                #cv2.imwrite("data/testOutput/"+filename, image)
+                # cv2.imwrite("data/testOutput/"+filename, image)
             else:
                 print("Skipping Unsupported File: ", filename)
 
@@ -251,5 +251,9 @@ proceed = promptInput("Generate TF Records?")
 if(proceed):
     for csvpath in csvpaths:
         if (os.path.isfile(csvpath)):
-            generateTFRecord('data/train', category_index,
-                             csvpath, 'data/train.record')
+            if(csvpath.endswith('train.csv')):
+                generateTFRecord('data/train', category_index,
+                                 csvpath, 'data/train.record')
+            else:
+                generateTFRecord('data/test', category_index,
+                                 csvpath, 'data/test.record')
