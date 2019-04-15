@@ -34,6 +34,7 @@ def convertXML2CSV(testTrainDir):
         csvpath = os.path.join(
             testTrainDir, '{}.csv'.format(directory))
         xml_df.to_csv(csvpath, index=None)
-        print('Successfully converted xml to csv.')
+        print('Successfully converted {}.xml to {}.csv.'.format(
+            directory, directory))
         CSVs.append(csvpath)
     return CSVs
