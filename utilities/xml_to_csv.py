@@ -27,9 +27,13 @@ def xml_to_csv(path):
 
 
 def convertXML2CSV(testTrainDir):
+    CSVs = []
     for directory in ['train', 'test']:
         image_path = os.path.join(testTrainDir, directory)
         xml_df = xml_to_csv(image_path)
-        xml_df.to_csv(os.path.join(
-            testTrainDir, '{}_labels.csv'.format(directory)), index=None)
+        csvpath = os.path.join(
+            testTrainDir, '{}.csv'.format(directory))
+        xml_df.to_csv(csvpath, index=None)
         print('Successfully converted xml to csv.')
+        CSVs.append(csvpath)
+    return CSVs

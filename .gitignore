@@ -107,5 +107,9 @@ venv.bak/
 data/dataset/
 data/train/
 data/test/
+data/test.csv
+data/train.csv
+data/test.record
+data/train.record
 models/
 testfile.py

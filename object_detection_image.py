@@ -39,10 +39,13 @@ from utilities.fileUtilities import splitTestTrainFiles
 # Convert XML to CSV Utility
 from utilities.xml_to_csv import convertXML2CSV
 
+# Generate TF Record utility
+from utilities.generate_TFRecord import generateTFRecord
+
 labelImgPath = 'E:\Tensorflow\labelImgRelease\labelImg.exe'
 # Supported files for Inference and Annotation
 supportedfiles = ["jpg", "jpeg", "png", "bmp"]
-labels = []
+initLabels = {}
 
 trainDir = 'data/train'
 testDir = 'data/test'
@@ -119,7 +122,7 @@ category_index = label_map_util.create_category_index_from_labelmap(
     PATH_TO_LABELS)
 
 for key in category_index.keys():
-    labels.append(category_index[key]["name"])
+    initLabels[key] = category_index[key]["name"]
 #cap = cv2.VideoCapture(0)
 
 path = "data/dataset"
@@ -232,13 +235,21 @@ if(verified):
     numImgGen = promptInt(
         "How many augmented Images have to be generated per Image?")
     # Generate Image Augmented File @Params Origin Directory , Destination Directory, Number of Images to be generated
-    generateAugmented("data/dataset", "data\dataset", numImgGen)
+    generateAugmented("data\dataset", "data\dataset", numImgGen)
 
 testPercentage, trainPercentage = promptRatio("Give Test:Train Ratio. ")
 hasSplit = splitTestTrainFiles(path, testDir, trainDir,
                                testPercentage, trainPercentage)
+csvpaths = []
 if(hasSplit):
     print("Files split to Test and Train Folders")
     genCSV = promptInput("Convert to Test and Train CSV Files?")
     if(genCSV):
-        convertXML2CSV('data')
+        csvpaths = convertXML2CSV('data')
+
+proceed = promptInput("Generate TF Records?")
+if(proceed):
+    for csvpath in csvpaths:
+        if (os.path.isfile(csvpath)):
+            generateTFRecord('data/train', category_index,
+                             csvpath, 'data/train.record')
