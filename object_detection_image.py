@@ -228,7 +228,7 @@ if(openLabelImg):
     if(os.path.isfile(labelImgPath)):
         os.system(labelImgPath)
     else:
-        print("Please check the path to LabelImg")
+        print("Incorrect path to LabelImg/ Missing. Open LabelImg yourself and verify the dataset before proceeding")
 
 verified = promptInput("Verified XMl Files?")
 if(verified):
