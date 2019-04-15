@@ -36,6 +36,9 @@ from utilities.prompt import promptInput, promptInt, promptRatio
 # Import File utilities
 from utilities.fileUtilities import splitTestTrainFiles
 
+# Convert XML to CSV Utility
+from utilities.xml_to_csv import convertXML2CSV
+
 labelImgPath = 'E:\Tensorflow\labelImgRelease\labelImg.exe'
 # Supported files for Inference and Annotation
 supportedfiles = ["jpg", "jpeg", "png", "bmp"]
@@ -236,3 +239,6 @@ hasSplit = splitTestTrainFiles(path, testDir, trainDir,
                                testPercentage, trainPercentage)
 if(hasSplit):
     print("Files split to Test and Train Folders")
+    genCSV = promptInput("Convert to Test and Train CSV Files?")
+    if(genCSV):
+        convertXML2CSV('data')
